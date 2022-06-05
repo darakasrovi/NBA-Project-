@@ -1,0 +1,65 @@
+---
+title: "NBA Project"
+author: "Matthew Grimm"
+date: "5/23/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+### packages
+library(ggeffects)
+library(rstanarm)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(stargazer)
+library(bayesplot)
+library(gridExtra)
+library(tidyverse)
+library(ggplot2)
+library(xtable)
+library(naniar)
+library(kableExtra)
+options(xtable.comment = FALSE)
+options(xtable.floating = FALSE)
+options(xtable.timestamp = "")
+```
+
+```{r}
+pg_stats <- read.csv("~/Downloads/NBA/pg_stats.csv")
+```
+
+```{r}
+## Win Loss
+pg_stats$WL <- replace(pg_stats$WL, pg_stats$WL == "W", 1)
+pg_stats$WL <- replace(pg_stats$WL, pg_stats$WL == "L", 0)
+
+
+## Points Categories
+pg_stats$TOV <- replace(pg_stats$TOV, pg_stats$TOV < 4, 1)
+pg_stats$TOV <- replace(pg_stats$TOV, pg_stats$TOV >= 4, 2)
+
+
+pg_stats$PTS <- as.numeric(pg_stats$PTS)
+pg_stats$TOV <- as.factor(pg_stats$TOV)
+pg_stats$WL <- as.factor(pg_stats$WL)
+
+```
+
+
+
+
+```{r}
+m3_bayes <- stan_glm(WL ~ PTS + TOV + AST, data = pg_stats, family=binomial(link="logit"), refresh = 0)
+plot(ggpredict(m3_bayes,terms=c("PTS[all]","TOV")))
+```
+
+
+
+
+
+
+
+
