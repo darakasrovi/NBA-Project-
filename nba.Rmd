@@ -27,39 +27,50 @@ options(xtable.floating = FALSE)
 options(xtable.timestamp = "")
 ```
 
-```{r}
-pg_stats <- read.csv("~/Downloads/NBA/pg_stats.csv")
-```
+```{r, include = FALSE}
+# Forwards
+bron <- read.csv("~/Downloads/NBA/player_data/bron.csv")
+pg <- read.csv("~/Downloads/NBA/player_data/pg.csv")
 
-```{r}
-## Win Loss
-pg_stats$WL <- replace(pg_stats$WL, pg_stats$WL == "W", 1)
-pg_stats$WL <- replace(pg_stats$WL, pg_stats$WL == "L", 0)
+# Guards
+dame <- read.csv("~/Downloads/NBA/player_data/dame.csv")
+luka <- read.csv("~/Downloads/NBA/player_data/luka.csv")
 
-
-## Points Categories
-pg_stats$TOV <- replace(pg_stats$TOV, pg_stats$TOV < 4, 1)
-pg_stats$TOV <- replace(pg_stats$TOV, pg_stats$TOV >= 4, 2)
-
-
-pg_stats$PTS <- as.numeric(pg_stats$PTS)
-pg_stats$TOV <- as.factor(pg_stats$TOV)
-pg_stats$WL <- as.factor(pg_stats$WL)
+# Centers
+embiid <- read.csv("~/Downloads/NBA/player_data/embiid.csv")
+kat <- read.csv("~/Downloads/NBA/player_data/kat.csv")
 
 ```
 
+#### Guard Model
 
+Potential covariates to consider (all lagged)
 
+-   minutes played
+-   points
+-   WL in last game
+-   FG pct or 3pt pct
+
+Potential covariates with no lags
+
+-   opponent
+-   age?
 
 ```{r}
-m3_bayes <- stan_glm(WL ~ PTS + TOV + AST, data = pg_stats, family=binomial(link="logit"), refresh = 0)
-plot(ggpredict(m3_bayes,terms=c("PTS[all]","TOV")))
+ggplot(data = dame, aes(x=X, y = PTS)) + geom_point(aes(colour = WL)) + geom_smooth(aes(colour=WL))
+
 ```
 
+#### Forward Model
+
+```{r}
 
 
+```
+
+#### Center Model
+
+```{r}
 
 
-
-
-
+```
