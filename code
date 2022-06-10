@@ -112,9 +112,12 @@ gamelog_embiid_df_all.to_csv('/Users/darakasrovi/Downloads/embiid.csv')
 from nba_api.stats.endpoints import leaguegamefinder
 gamefinder = leaguegamefinder.LeagueGameFinder(season_nullable='2021-22',league_id_nullable='00',season_type_nullable='Playoffs')
 playoffgames = gamefinder.get_data_frames()[0]
+#csv
+playoffgames.to_csv('/Users/darakasrovi/Downloads/teamplayoffstats.csv')
 
 #Player Playoffs Stats 2021-22 Season 
 from nba_api.stats.endpoints import leaguegamelog
 playerfinder = leaguegamelog.LeagueGameLog(season='2021-22',season_type_all_star= 'Playoffs',player_or_team_abbreviation='P')
 playoffplayer = playerfinder.get_data_frames()[0]
-
+#csv
+playoffplayer.to_csv('/Users/darakasrovi/Downloads/playerplayoffstats.csv')
