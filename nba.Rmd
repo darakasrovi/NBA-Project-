@@ -1,7 +1,6 @@
 ---
 title: "NBA Project"
-author: "Matthew Grimm"
-date: "5/23/2022"
+author: "Matthew Grimm & Dara Kasarovi"
 output: html_document
 ---
 
